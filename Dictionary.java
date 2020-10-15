@@ -126,7 +126,7 @@ public class Dictionary implements DictionaryADT{
         return this.numDataItems;
     }
 
-    public int polynomialHashFunction(String key){
+    private int polynomialHashFunction(String key){
 
         //Gets the length of the string
         int key_length = key.length();
