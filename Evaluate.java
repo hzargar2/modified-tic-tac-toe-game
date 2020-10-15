@@ -196,7 +196,7 @@ public class Evaluate {
 
                 // If j surpasses the number of available cols we break out the inner for loop. This happens when the
                 // num of rows and cols in the array are different
-                if (j>this.boardColumns){
+                if (j>=this.boardColumns){
                     break;
                 }
                 // If char symbol is the same as the element in the diagonal, we increment counter by 1 and update
@@ -227,7 +227,7 @@ public class Evaluate {
 
                 // If j surpasses the number of available cols we break out the inner for loop. This happens when the
                 // num of rows and cols in the array are different
-                if (j>this.boardRows){
+                if (j>=this.boardRows){
                     break;
                 }
 
@@ -266,7 +266,7 @@ public class Evaluate {
         int max_diagonal_count = 0;
 
         // Iterates through diagonals from top right to bottom left
-        for(int k = 0 ; k < this.boardColumns ; k++) {
+        for(int k = 0 ; k < this.boardColumns + this.boardRows ; k++) {
 
             // Reset counter for each new diagonal
             int count = 0;
@@ -277,9 +277,9 @@ public class Evaluate {
             for( int j = 0 ; j <= k ; j++ ) {
                 int i = k - j;
 
-                // If i surpasses the number of available rows we break out the inner for loop. This happens when the
-                // num of rows and cols in the array are different
-                if (i > this.boardRows){
+                // If i surpasses the number of available rows or j surpasses the number of available columns, we
+                // break out the inner for loop. This happens when the num of rows and cols in the array are different
+                if (i >= this.boardRows || j >= this.boardColumns){
                     break;
                 }
                 // Check if char symbol is equal to the element in the diagonal. If so, we increment count by 1 and update

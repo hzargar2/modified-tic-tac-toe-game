@@ -33,45 +33,37 @@ public class Dictionary implements DictionaryADT{
         // Function changes it to 0 later if there is no collision.
         int return_val = 1;
 
-        try {
+        // Checks to see if record with the same key already exists in the hashtable
+        Data found_record = get(record.getKey());
 
-            // Checks to see if record with the same key already exists in the hashtable
-            Data found_record = get(record.getKey());
-
-            // If the record found is not null, then it exists and we throw the DuplicatedKeyException. Otherwise, we
-            // continue.
-            if (found_record != null){
-                throw new DuplicatedKeyException();
-            }
-
-            int pos = polynomialHashFunction(record.getKey());
-
-            //Gets linked list at that index in the hashtable
-            LinkedList<Data> linkedList = this.hashtable[pos];
-
-            // Checks to see if the linked list is empty. If so, we add the record to the linked list, increment the
-            // counter for the number of Data objects in the hashtable, and set return_val to 0 to indicate no collision
-            // has occurred.
-            if (linkedList.size() == 0) {
-                linkedList.add(record);
-                this.numDataItems+=1;
-                return_val = 0;
-            }
-
-            // There are already elements in the linked list and we have a collision. Simply add the record,
-            // increment the counter for the number of Data objects in the hashtable, and set return_val to 1 to indicate
-            // a collision has occurred.
-            else {
-                linkedList.add(record);
-                this.numDataItems+=1;
-                return_val = 1;
-
-            }
-
+        // If the record found is not null, then it exists and we throw the DuplicatedKeyException. Otherwise, we
+        // continue.
+        if (found_record != null){
+            throw new DuplicatedKeyException();
         }
-        // Catches DuplicatedKeyException
-        catch (DuplicatedKeyException e){
-            System.out.println(e.getMessage());
+
+        int pos = polynomialHashFunction(record.getKey());
+
+        //Gets linked list at that index in the hashtable
+        LinkedList<Data> linkedList = this.hashtable[pos];
+
+        // Checks to see if the linked list is empty. If so, we add the record to the linked list, increment the
+        // counter for the number of Data objects in the hashtable, and set return_val to 0 to indicate no collision
+        // has occurred.
+        if (linkedList.size() == 0) {
+            linkedList.add(record);
+            this.numDataItems+=1;
+            return_val = 0;
+        }
+
+        // There are already elements in the linked list and we have a collision. Simply add the record,
+        // increment the counter for the number of Data objects in the hashtable, and set return_val to 1 to indicate
+        // a collision has occurred.
+        else {
+            linkedList.add(record);
+            this.numDataItems+=1;
+            return_val = 1;
+
         }
 
         // Returns return_val. If 1, then collision has occurred
@@ -81,39 +73,33 @@ public class Dictionary implements DictionaryADT{
 
     public void remove(String key) throws InexistentKeyException {
 
-        try{
-            int pos = polynomialHashFunction(key);
+        int pos = polynomialHashFunction(key);
 
-            //Gets linked list at that index in the hashtable
-            LinkedList<Data> linkedList = this.hashtable[pos];
+        //Gets linked list at that index in the hashtable
+        LinkedList<Data> linkedList = this.hashtable[pos];
 
-            // Linked list is empty so key doesn't exist and exception is thrown.
-            if (linkedList.size() == 0) {
-                throw new InexistentKeyException();
-            }
+        // Linked list is empty so key doesn't exist and exception is thrown.
+        if (linkedList.size() == 0) {
+            throw new InexistentKeyException();
+        }
 
-            //Otherwise, iterates through Data objects in the linked list and removes any Data object that has the same
-            // key as the parameter key
-            else{
+        //Otherwise, iterates through Data objects in the linked list and removes any Data object that has the same
+        // key as the parameter key
+        else{
 
-                for (Data record : linkedList) {
-                    if (record.getKey().equals(key)) {
+            for (Data record : linkedList) {
+                if (record.getKey().equals(key)) {
 
-                        // Removes the Data object record and returns to break out of the function
-                        linkedList.remove(record);
-                        return;
-                    }
+                    // Removes the Data object record and returns to break out of the function
+                    linkedList.remove(record);
+                    return;
                 }
             }
-
-            // No records were removed prior for the return statement to be executed and for it to not reach here.
-            // Therefore, we assume that since it reached here then no records were removed and the key doesn't exist.
-            throw new InexistentKeyException();
-
         }
-        catch (InexistentKeyException e){
-            System.out.println(e.getMessage());
-        }
+
+        // No records were removed prior for the return statement to be executed and for it to not reach here.
+        // Therefore, we assume that since it reached here then no records were removed and the key doesn't exist.
+        throw new InexistentKeyException();
 
     }
 
