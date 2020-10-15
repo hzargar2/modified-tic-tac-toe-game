@@ -125,7 +125,6 @@ public class Evaluate {
             }
         }
 
-        System.out.println("hereee "+ max_row_count);
         // If the max_row_count is greater than or equal to tilesNeeded, then we have sufficient tiles in a row
         // for char symbol to win so we return true. Otherwise, we return false.
         if (max_row_count >= this.tilesNeeded){
@@ -167,7 +166,7 @@ public class Evaluate {
                 }
             }
         }
-        System.out.println("here1 "+ max_col_count );
+
         // If the max_col_count is greater than or equal to tilesNeeded, then we have sufficient tiles in a col
         // for char symbol to win so we return true. Otherwise, we return false.
 
@@ -217,7 +216,7 @@ public class Evaluate {
                 }
             }
         }
-        System.out.println(symbol+" diagonal_count TR-BL: "+max_diagonal_count);
+
         // If the max_diagonal_count is greater than or equal to tilesNeeded, then we have sufficient tiles in a diagonal
         // for char symbol to win so we return true. Otherwise, we return false.
         if (max_diagonal_count >= this.tilesNeeded){
