@@ -92,7 +92,7 @@ public class Evaluate {
         return this.gameBoard[row][col] == 'o';
     }
 
-    public boolean winsByRow(char symbol){
+    private boolean winsByRow(char symbol){
 
         // Function calculates max number of consecutive char symbol in a row
 
@@ -125,6 +125,7 @@ public class Evaluate {
             }
         }
 
+        System.out.println("hereee "+ max_row_count);
         // If the max_row_count is greater than or equal to tilesNeeded, then we have sufficient tiles in a row
         // for char symbol to win so we return true. Otherwise, we return false.
         if (max_row_count >= this.tilesNeeded){
@@ -135,7 +136,7 @@ public class Evaluate {
         }
     }
 
-    public boolean winsByCol(char symbol) {
+    private boolean winsByCol(char symbol) {
         // Function calculates max number of consecutive char symbol in a column
 
         // Stores the maximum count of consecutive occurrences of char symbol
@@ -166,9 +167,10 @@ public class Evaluate {
                 }
             }
         }
-
+        System.out.println("here1 "+ max_col_count );
         // If the max_col_count is greater than or equal to tilesNeeded, then we have sufficient tiles in a col
         // for char symbol to win so we return true. Otherwise, we return false.
+
         if (max_col_count >= this.tilesNeeded){
             return true;
         }
@@ -177,7 +179,57 @@ public class Evaluate {
         }
     }
 
-    public boolean winsByDiagonalTopLeftToBottomRight(char symbol){
+    private boolean winsByDiagonalTopRightToBottomLeft(char symbol){
+
+        // Function calculates max number of consecutive char symbol in a diagonal from TOP RIGHT to BOTTOM LEFT
+
+        // Stores the maximum count of consecutive occurrences of char symbol
+        int max_diagonal_count = 0;
+
+        // Iterates through diagonals from top right to bottom left
+        for(int k = 0 ; k <= this.boardColumns + this.boardRows - 2; k++) {
+
+            // Reset counter for each new diagonal
+            int count = 0;
+
+            // Iterates through values in the diagonal. The sum of their indices is equal to k (the index
+            // of the column) so we can easily calculate i by iterating through j (up to and equal to k) and subtracting
+            // j from k to get i.
+            for(int j = 0 ; j <= k ; j++) {
+                int i = k - j;
+
+                // If i surpasses the number of available rows or j surpasses the number of available columns, we
+                // break out the inner for loop. This happens when the num of rows and cols in the array are different
+                if (i >= this.boardRows || j >= this.boardColumns){
+                    continue;
+                }
+                // Check if char symbol is equal to the element in the diagonal. If so, we increment count by 1 and update
+                // max_diagonal_count if possible.
+                if (symbol == this.gameBoard[i][j]){
+                    count+=1;
+                    if (count>max_diagonal_count){
+                        max_diagonal_count = count;
+                    }
+                }
+                // Otherwise, we reset the counter to 0
+                else {
+                    count =0;
+                }
+            }
+        }
+        System.out.println(symbol+" diagonal_count TR-BL: "+max_diagonal_count);
+        // If the max_diagonal_count is greater than or equal to tilesNeeded, then we have sufficient tiles in a diagonal
+        // for char symbol to win so we return true. Otherwise, we return false.
+        if (max_diagonal_count >= this.tilesNeeded){
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+
+    private boolean winsByDiagonalTopLeftToBottomRight(char symbol){
 
         // Function calculates max number of consecutive char symbol in a diagonal from TOP LEFT to BOTTOM RIGHT
 
@@ -197,7 +249,7 @@ public class Evaluate {
                 // If j surpasses the number of available cols we break out the inner for loop. This happens when the
                 // num of rows and cols in the array are different
                 if (j>=this.boardColumns){
-                    break;
+                    continue;
                 }
                 // If char symbol is the same as the element in the diagonal, we increment counter by 1 and update
                 // max_diagonal_count if possible.
@@ -228,7 +280,7 @@ public class Evaluate {
                 // If j surpasses the number of available cols we break out the inner for loop. This happens when the
                 // num of rows and cols in the array are different
                 if (j>=this.boardRows){
-                    break;
+                    continue;
                 }
 
                 // If char symbol is the same as the element in the diagonal, we increment counter by 1 and update
@@ -258,58 +310,10 @@ public class Evaluate {
 
     }
 
-    public boolean winsByDiagonalTopRightToBottomLeft(char symbol){
-
-        // Function calculates max number of consecutive char symbol in a diagonal from TOP RIGHT to BOTTOM LEFT
-
-        // Stores the maximum count of consecutive occurrences of char symbol
-        int max_diagonal_count = 0;
-
-        // Iterates through diagonals from top right to bottom left
-        for(int k = 0 ; k < this.boardColumns + this.boardRows ; k++) {
-
-            // Reset counter for each new diagonal
-            int count = 0;
-
-            // Iterates through values in the diagonal. The sum of their indices is equal to k (the index
-            // of the column) so we can easily calculate i by iterating through j (up to and equal to k) and subtracting
-            // j from k to get i.
-            for( int j = 0 ; j <= k ; j++ ) {
-                int i = k - j;
-
-                // If i surpasses the number of available rows or j surpasses the number of available columns, we
-                // break out the inner for loop. This happens when the num of rows and cols in the array are different
-                if (i >= this.boardRows || j >= this.boardColumns){
-                    break;
-                }
-                // Check if char symbol is equal to the element in the diagonal. If so, we increment count by 1 and update
-                // max_diagonal_count if possible.
-                if (symbol == this.gameBoard[i][j]){
-                    count+=1;
-                    if (count>max_diagonal_count){
-                        max_diagonal_count = count;
-                    }
-                }
-                // Otherwise, we reset the counter to 0
-                else {
-                    count =0;
-                }
-            }
-        }
-
-        // If the max_diagonal_count is greater than or equal to tilesNeeded, then we have sufficient tiles in a diagonal
-        // for char symbol to win so we return true. Otherwise, we return false.
-        if (max_diagonal_count >= this.tilesNeeded){
-            return true;
-        }
-        else {
-            return false;
-        }
-
-    }
-
     public boolean wins (char symbol){
-        if (winsByRow(symbol) || winsByCol(symbol) || winsByDiagonalTopLeftToBottomRight(symbol) || winsByDiagonalTopRightToBottomLeft(symbol)){
+
+        // If either of these conditions is true then it returns true, Otherwise, returns false.
+        if (winsByRow(symbol) || winsByCol(symbol) || winsByDiagonalTopRightToBottomLeft(symbol) || winsByDiagonalTopLeftToBottomRight(symbol)){
             return true;
         }
         else {
