@@ -24,7 +24,7 @@ public class Evaluate {
         }
     }
 
-    public String gameBoardToString(){
+    private String gameBoardToString(){
 
         //Initialize a data structure to hold the concatenated chars from the array
         StringBuilder config = new StringBuilder();
