@@ -249,7 +249,7 @@ public class Evaluate {
                 // If j surpasses the number of available cols we break out the inner for loop. This happens when the
                 // num of rows and cols in the array are different
                 if (j>=this.boardColumns){
-                    continue;
+                    break;
                 }
                 // If char symbol is the same as the element in the diagonal, we increment counter by 1 and update
                 // max_diagonal_count if possible.
@@ -280,7 +280,7 @@ public class Evaluate {
                 // If j surpasses the number of available cols we break out the inner for loop. This happens when the
                 // num of rows and cols in the array are different
                 if (j>=this.boardRows){
-                    continue;
+                    break;
                 }
 
                 // If char symbol is the same as the element in the diagonal, we increment counter by 1 and update
