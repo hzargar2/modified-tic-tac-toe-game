@@ -92,6 +92,7 @@ public class Dictionary implements DictionaryADT{
 
                     // Removes the Data object record and returns to break out of the function
                     linkedList.remove(record);
+                    this.numDataItems-=1;
                     return;
                 }
             }
