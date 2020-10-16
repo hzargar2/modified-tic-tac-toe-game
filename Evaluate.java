@@ -186,7 +186,7 @@ public class Evaluate {
         int max_diagonal_count = 0;
 
         // Iterates through diagonals from top right to bottom left
-        for(int k = 0 ; k <= this.boardColumns + this.boardRows - 2; k++) {
+        for(int k = 0 ; k <= this.boardColumns - 1  + this.boardRows - 1; k++) {
 
             // Reset counter for each new diagonal
             int count = 0;
